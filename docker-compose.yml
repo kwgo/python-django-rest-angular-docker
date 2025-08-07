@@ -1,0 +1,18 @@
+services:
+  python_django_rest:
+    build:
+      context: ./python_django_rest
+    volumes:
+      - ./python_django_rest:/code
+    ports:
+      - "8000:8000"
+    command: "python manage.py runserver 0.0.0.0:8000"
+
+  angular_ui:
+    build:
+      context: ./angular_ui
+    volumes:
+      - ./angular_ui:/app
+    ports:
+      - "4200:4200"
+    command: "npm start"
