@@ -1,0 +1,9 @@
+services:
+  angular_ui:
+    build:
+      context: .
+    volumes:
+      - .:/app
+    ports:
+      - "4200:4200"
+    command: "npm start"
