@@ -4,6 +4,7 @@ services:
       context: .
     volumes:
       - .:/app
+      - /app/node_modules
     ports:
       - "4200:4200"
     command: "npm start"

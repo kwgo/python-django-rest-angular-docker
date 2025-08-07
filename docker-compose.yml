@@ -13,6 +13,7 @@ services:
       context: ./angular_ui
     volumes:
       - ./angular_ui:/app
+      - ./angular_ui:/app/node_modules
     ports:
       - "4200:4200"
     command: "npm start"
