@@ -1,0 +1,15 @@
+<div class="form-froup row">
+    <label class="col-sm-2 col-form-label">Coach Name</label>
+    <div class="col-sm-10">
+        <input type="input" class="form-control" [(ngModel)] = "coachName"
+        placeholder="Enter coach name">
+    </div>
+</div>
+
+@if(coach.CoachId==0) {
+    <button type="button" (click)="addCoach()" class="btn btn-primary">Add</button>
+}
+
+@if(coach.CoachId!=0) {
+    <button type="button" (click)="updateCoach()" class="btn btn-primary">Edit</button>
+}

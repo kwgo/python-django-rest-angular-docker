@@ -1,0 +1,35 @@
+<div class="d-flex flex-row bd-highlight mb-3">
+    <div class="form-froup row" style="width: 55%;">
+        <label class="col-sm-3 col-form-label">Member Name</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" [(ngModel)]="memberName" placeholder="Enter Member Name">
+        </div>
+        <label class="col-sm-3 col-form-label">Coach</label>
+        <div class="col-sm-9">
+            <select class="form-control" [(ngModel)]="coachName">
+                <option>--Select--</option>
+                @for (coach of coaches; track coach.CoachId) {
+                <option>
+                    {{ coach.CoachName }}
+                </option>
+                }
+            </select>
+        </div>
+        <label class="col-sm-3 col-form-label">Date of join</label>
+        <div class="col-sm-9">
+            <input type="date" [(ngModel)]="dateOfJoin">
+        </div>
+    </div>
+    <div class="ml-3 bd-highlight" style="width: 30%;">
+        <img [src]=photoFilePath height="250px;" width="200px;">
+        <input type="file" (change)="uploadPhoto($event)" class="mt-2" />
+    </div>
+</div>
+
+@if (member.MemberId == 0) {
+<button (click)="addMember()" class="btn btn-primary">Add</button>
+}
+
+@if (member.MemberId != 0) {
+<button (click)="updateMember()" class="btn btn-primary">Update</button>
+}

@@ -1,5 +1,5 @@
 services:
-  employee_app:
+  python_django_rest:
     build:
       context: .
       dockerfile: Dockerfile

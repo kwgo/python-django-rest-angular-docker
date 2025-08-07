@@ -6,12 +6,12 @@ echo "🚀 Starting Django entrypoint..."
 
 # Check if there are unapplied migrations
 echo "🔍 Checking for pending migrations..."
-if python manage.py showmigrations --plan | grep '\[ \]'; then
+if py manage.py showmigrations --plan | grep '\[ \]'; then
     echo "📌 Running makemigrations..."
-    python manage.py makemigrations employee_app
+    py manage.py makemigrations member_app
 
     echo "📌 Running migrate..."
-    python manage.py migrate employee_app
+    py manage.py migrate member_app
 else
     echo "✅ No pending migrations."
 fi

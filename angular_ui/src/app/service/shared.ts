@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-//  imports: [HttpClient],
   providedIn: 'root'
 })
 
@@ -13,43 +12,43 @@ export class Shared {
 
   constructor(private http:HttpClient) { }
   
-  getDepartments():Observable<any[]>{
+  getCoaches():Observable<any[]>{
     console.log("-----------------------------");
-      return this.http.get<any[]>(this.apiUrl + '/department/');
+    return this.http.get<any[]>(this.apiUrl + '/coach/');
   }
 
-  addDepartment(department:any) {
-      return this.http.post(this.apiUrl + '/department/', department);
+  addCoach(coach:any) {
+    return this.http.post(this.apiUrl + '/coach/', coach);
   }
 
-  updateDepartment(department:any) {
-      return this.http.put(this.apiUrl + '/department/', department);
+  updateCoach(coach:any) {
+    return this.http.put(this.apiUrl + '/coach/', coach);
   }
-  deleteDepartment(departmentId:any) {
-      return this.http.delete(this.apiUrl + '/department/' + departmentId + '/');
-  }
-
-  getEmployees():Observable<any[]>{
-      return this.http.get<any[]>(this.apiUrl + '/employee/');
+  deleteCoach(coachId:any) {
+    return this.http.delete(this.apiUrl + '/coach/' + coachId + '/');
   }
 
-  addEmployee(employee:any) {
-      return this.http.post(this.apiUrl + '/employee/', employee);
+  getMembers():Observable<any[]>{
+    return this.http.get<any[]>(this.apiUrl + '/member/');
   }
 
-  updateEmployee(employee:any) {
-      return this.http.put(this.apiUrl + '/employee/', employee);
+  addMember(member:any) {
+    return this.http.post(this.apiUrl + '/member/', member);
   }
-  deleteEmployee(employeeId:any) {
-      return this.http.delete(this.apiUrl + '/employee/' + employeeId + '/');
+
+  updateMember(member:any) {
+    return this.http.put(this.apiUrl + '/member/', member);
+  }
+  deleteMember(memberId:any) {
+    return this.http.delete(this.apiUrl + '/member/' + memberId + '/');
   }
 
   uploadPhoto(photo:any) {
-      return this.http.post(this.apiUrl + '/savefile/', photo);
+    return this.http.post(this.apiUrl + '/savefile/', photo);
   }
 
-  getDepartmentNames():Observable<any[]>{
-      return this.http.get<any[]>(this.apiUrl + '/department/');
+  getCoachNames():Observable<any[]>{
+    return this.http.get<any[]>(this.apiUrl + '/coach/');
   }
 
 }
