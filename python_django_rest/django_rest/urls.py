@@ -25,4 +25,5 @@ urlpatterns = [
 
 #   re_path(r'^', include('employee_app.urls'))
     path('', include('employee_app.urls'))
+#   path('company/', include('employee_app.urls'))
 ]
