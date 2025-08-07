@@ -17,5 +17,12 @@ Start server:
 1) py manage.py runserver (under python_django_rest folder)
 2) ng serve –open (under angula_ui folder)
 
+Docker build and run:
+1) docker compose up --build (under python_django_rest and angula_ui folder)
+2) docker compose up --build (under root folder)
+
 Angular server URL:
 http://localhost:4200/
+
+Rest api server URL:
+http://localhost:8000/
