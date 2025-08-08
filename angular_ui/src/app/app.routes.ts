@@ -7,7 +7,6 @@ import { Coach } from './coach/coach'
 import { Member } from './member/member'
 
 import { Login } from './login/login'
-import { Main } from './main/main'
 import { AuthGuard } from './guard/auth.guard'; // we'll create this to protect routes
 
 
