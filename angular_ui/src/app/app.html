@@ -1,3 +1,4 @@
+@if(authService.isLoggedIn()) {
 <div class="container">
     <h3 class="d-flex justify-content-center">&nbsp;</h3>
     <h3 class="d-flex justify-content-center">MOVATI Member Management Portal</h3>
@@ -12,8 +13,13 @@
             <li class="nav-item">
                 <button routerLink="member" class="m-1 btn btn-light btn-outline-primary" Button>Members</button>
             </li>
+
+            <li class="nav-item">
+                <button (click)="logout()" class="m-1 btn btn-danger">Logout</button>
+            </li>
         </ul>
     </nav>
 </div>
+}
 
 <router-outlet></router-outlet>

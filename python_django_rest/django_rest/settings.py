@@ -38,6 +38,13 @@ ALLOWED_HOSTS = []
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+AUTH_USER_MODEL = "member_app.Users"
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
