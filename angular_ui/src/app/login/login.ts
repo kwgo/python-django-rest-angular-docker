@@ -1,36 +1,51 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+//import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+//  imports: [FormsModule],
+
+  imports: [ReactiveFormsModule],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrls: ['./login.css']
 })
 export class Login {
-  username = '';
+  email = '';
   password = '';
   errorMessage = '';
 
-  constructor(private authService: AuthService) { }
+  loginForm: FormGroup;
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(4)]]
+    });
+  }
 
   onLogin() {
-    this.errorMessage = '';
-
-    if (!this.username || !this.password) {
-      this.errorMessage = 'Please fill out all fields.';
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
       return;
     }
+ 
+    this.errorMessage = '';
 
+    this.email = this.loginForm.get('email')?.value;
+    this.password = this.loginForm.get('password')?.value;
+
+    console.log('Email:', this.email);
+    console.log('Password:', this.password);
 
     var user = {
-      email: this.username,
+      email: this.email,
       password: this.password
     }
 
-    console.log("hhh")
     console.log(user)
 
     this.authService.login(user).subscribe({
