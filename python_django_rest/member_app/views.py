@@ -9,6 +9,7 @@ from member_app.models import Coaches, Members
 from member_app.serializers import CoachSerializer, MemberSerializer
 
 from member_app.service.coach_service import CoachService;
+from member_app.service.member_service import MemberService;
 
 # Create your views here.
 @csrf_exempt
@@ -44,8 +45,7 @@ def coachApi(request, id=0):
 @csrf_exempt
 def memberApi(request, id=0):
     if request.method == "GET":
-        members = Members.objects.all()
-        member_serializer = MemberSerializer(members, many=True)
+        member_serializer = MemberSerializer(MemberService().get_all_members() , many=True)
         return JsonResponse(member_serializer.data, safe=False)
     
     elif request.method == "POST":
@@ -53,7 +53,7 @@ def memberApi(request, id=0):
         member_serializer = MemberSerializer(data = member_data)
         print(member_serializer.is_valid())
         if member_serializer.is_valid():
-            member_serializer.save()
+            MemberService().add_member(Members(**member_serializer.validated_data))
             return JsonResponse('Added Successfully!!', safe=False)
         return JsonResponse('Failed to add!!', safe=False)
 
@@ -62,13 +62,15 @@ def memberApi(request, id=0):
         member = Members.objects.get(MemberId=member_data['MemberId'])
         member_serializer = MemberSerializer(member, data = member_data)
         if member_serializer.is_valid():
-            member_serializer.save()
+            for attr, value in member_serializer.validated_data.items():
+                setattr(member, attr, value)
+            MemberService().update_member(member)
             return JsonResponse('Updated Successfully!!', safe=False)
         return JsonResponse('Failed to update!!', safe=False)
 
     elif request.method == "DELETE":
         member = Members.objects.get(MemberId=id)
-        member.delete()
+        MemberService().delete_member(member)
         return JsonResponse('Deleted Successfully!!', safe=False)
 
 @csrf_exempt
