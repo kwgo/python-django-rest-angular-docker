@@ -15,7 +15,8 @@ from member_app.service.member_service import MemberService;
 @csrf_exempt
 def coachApi(request, id=0):
     if request.method == "GET":
-        coach_serializer = CoachSerializer(CoachService().get_all_coaches(), many=True)
+        coaches, error = CoachService().get_all_coaches()
+        coach_serializer = CoachSerializer(coaches, many=True)
         return JsonResponse(coach_serializer.data, safe=False)
     
     elif request.method == "POST":
@@ -28,7 +29,7 @@ def coachApi(request, id=0):
 
     elif request.method == "PUT":
         coach_data = JSONParser().parse(request)
-        coach = Coaches.objects.get(CoachId=coach_data['CoachId'])
+        coach, error = CoachService().get_coach(coach_data['CoachId'])
         coach_serializer = CoachSerializer(coach, data = coach_data)
         if coach_serializer.is_valid():
             for attr, value in coach_serializer.validated_data.items():
@@ -45,7 +46,8 @@ def coachApi(request, id=0):
 @csrf_exempt
 def memberApi(request, id=0):
     if request.method == "GET":
-        member_serializer = MemberSerializer(MemberService().get_all_members() , many=True)
+        members, error = MemberService().get_all_members()
+        member_serializer = MemberSerializer(members, many=True)
         return JsonResponse(member_serializer.data, safe=False)
     
     elif request.method == "POST":
@@ -59,7 +61,7 @@ def memberApi(request, id=0):
 
     elif request.method == "PUT":
         member_data = JSONParser().parse(request)
-        member = Members.objects.get(MemberId=member_data['MemberId'])
+        member, error = MemberService().get_member(member_data['MemberId'])
         member_serializer = MemberSerializer(member, data = member_data)
         if member_serializer.is_valid():
             for attr, value in member_serializer.validated_data.items():

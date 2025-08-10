@@ -6,7 +6,7 @@ class MemberService:
     def get_all_members(self):
         try:
             members = Members.objects.all()
-            return members
+            return members, None
         except Exception as e:
             return None, str(e)
         
@@ -20,7 +20,12 @@ class MemberService:
             return False, str(e)
 
     def get_member(self, member_id):
-        return Members.objects.get(MemberId=member_id)
+        try:
+            member = Members.objects.get(MemberId=member_id)
+            return member, None
+        except Exception as e:
+            return False, str(e)
+
 
     def update_member(self, member):
         try:

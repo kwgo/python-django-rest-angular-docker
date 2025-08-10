@@ -7,7 +7,7 @@ class CoachService:
     def get_all_coaches(self):
         try:
             coachs = Coaches.objects.all()
-            return coachs
+            return coachs, None
         except Exception as e:
             return None, str(e)
         
@@ -21,7 +21,11 @@ class CoachService:
             return False, str(e)
 
     def get_coach(self, coach_id):
-        return Coaches.objects.get(CoachId=coach_id)
+        try:
+            coach = Coaches.objects.get(CoachId=coach_id)
+            return coach, None
+        except Exception as e:
+            return False, str(e)
 
     def update_coach(self, coach):
         try:
