@@ -8,21 +8,20 @@ from django.core.files.storage import default_storage
 from member_app.models import Coaches, Members
 from member_app.serializers import CoachSerializer, MemberSerializer
 
+from member_app.service.coach_service import CoachService;
+
 # Create your views here.
 @csrf_exempt
 def coachApi(request, id=0):
     if request.method == "GET":
-        coaches = Coaches.objects.all()
-        coach_serializer = CoachSerializer(coaches, many=True)
+        coach_serializer = CoachSerializer(CoachService().get_all_coaches(), many=True)
         return JsonResponse(coach_serializer.data, safe=False)
     
     elif request.method == "POST":
         coach_data = JSONParser().parse(request)
-        print(coach_data)
-
         coach_serializer = CoachSerializer(data = coach_data)
         if coach_serializer.is_valid():
-            coach_serializer.save()
+            CoachService().add_coach(Coaches(**coach_serializer.validated_data))
             return JsonResponse('Added Successfully!!', safe=False)
         return JsonResponse('Failed to add!!', safe=False)
 
@@ -31,13 +30,15 @@ def coachApi(request, id=0):
         coach = Coaches.objects.get(CoachId=coach_data['CoachId'])
         coach_serializer = CoachSerializer(coach, data = coach_data)
         if coach_serializer.is_valid():
-            coach_serializer.save()
+            for attr, value in coach_serializer.validated_data.items():
+                setattr(coach, attr, value)
+            CoachService().update_coach(coach)
             return JsonResponse('Updated Successfully!!', safe=False)
         return JsonResponse('Failed to update!!', safe=False)
 
     elif request.method == "DELETE":
         coach = Coaches.objects.get(CoachId=id)
-        coach.delete()
+        CoachService().delete_coach(coach)
         return JsonResponse('Deleted Successfully!!', safe=False)
 
 @csrf_exempt
@@ -51,8 +52,6 @@ def memberApi(request, id=0):
         member_data = JSONParser().parse(request)
         member_serializer = MemberSerializer(data = member_data)
         print(member_serializer.is_valid())
-        if not member_serializer.is_valid():
-            print(member_serializer.errors)
         if member_serializer.is_valid():
             member_serializer.save()
             return JsonResponse('Added Successfully!!', safe=False)
@@ -60,16 +59,8 @@ def memberApi(request, id=0):
 
     elif request.method == "PUT":
         member_data = JSONParser().parse(request)
-        print("========= 1 ==========")
-        print(member_data)
-        print(member_data['MemberId'])
         member = Members.objects.get(MemberId=member_data['MemberId'])
-        print("========= 2 ==========")
         member_serializer = MemberSerializer(member, data = member_data)
-        print(member_serializer)
-        print("========= 3 ==========")
-        if not member_serializer.is_valid():
-            print(member_serializer.errors)
         if member_serializer.is_valid():
             member_serializer.save()
             return JsonResponse('Updated Successfully!!', safe=False)
