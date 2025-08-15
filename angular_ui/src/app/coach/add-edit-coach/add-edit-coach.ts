@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { Shared } from '../../service/shared.service'
+import { SharedService } from '../../service/shared.service'
 
 @Component({
   selector: 'app-add-edit-coach',
@@ -10,7 +10,7 @@ import { Shared } from '../../service/shared.service'
   styleUrl: './add-edit-coach.css'
 })
 export class AddEditCoach implements OnInit {
-  constructor(private shared:Shared) {}
+  constructor(private sharedService:SharedService) {}
 
   @Input() coach: any;
   
@@ -27,7 +27,7 @@ export class AddEditCoach implements OnInit {
       CoachId : this.coachId,
       CoachName : this.coachName
     };
-    this.shared.addCoach(coach).subscribe(res=>{
+    this.sharedService.addCoach(coach).subscribe(res=>{
       alert(res.toString());
     });
   }
@@ -37,7 +37,7 @@ export class AddEditCoach implements OnInit {
       CoachId : this.coachId,
       CoachName : this.coachName
     };
-    this.shared.updateCoach(coach).subscribe(res=>{
+    this.sharedService.updateCoach(coach).subscribe(res=>{
       alert(res.toString());
     });
   }

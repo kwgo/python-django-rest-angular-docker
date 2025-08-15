@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { Shared } from '../../service/shared.service'
+import { SharedService } from '../../service/shared.service'
 import { AddEditMember } from '../add-edit-member/add-edit-member';
 
 @Component({
@@ -25,7 +25,7 @@ export class ShowMember implements OnInit {
   memberCoachFilter: string = "";
   memberDateOfJoinFilter: string = "";
 
-  constructor(private shared: Shared) {
+  constructor(private sharedService: SharedService) {
   }
 
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class ShowMember implements OnInit {
   }
 
   getMembers() {
-    this.shared.getMembers().subscribe(data => {
+    this.sharedService.getMembers().subscribe(data => {
       console.log("Shared service getMembers() start ---");
       this.members = data;
       this.membersOrigin = data;
@@ -68,7 +68,7 @@ export class ShowMember implements OnInit {
 
   deleteMember(member: any) {
     if (confirm('Are you sure??')) {
-      this.shared.deleteMember(member.MemberId).subscribe(data => {
+      this.sharedService.deleteMember(member.MemberId).subscribe(data => {
         alert(data.toString());
         this.getMembers();
       });

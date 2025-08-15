@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { Shared } from '../../service/shared.service'
+import { SharedService } from '../../service/shared.service'
 
 @Component({
   selector: 'app-add-edit-member',
@@ -10,7 +10,7 @@ import { Shared } from '../../service/shared.service'
   styleUrl: './add-edit-member.css'
 })
 export class AddEditMember implements OnInit {
-  constructor(private shared:Shared) {}
+  constructor(private sharedService:SharedService) {}
 
   @Input() member: any;
   
@@ -33,7 +33,7 @@ export class AddEditMember implements OnInit {
   }
   
   loadCoaches() {
-    this.shared.getCoaches().subscribe((data: any) => {
+    this.sharedService.getCoaches().subscribe((data: any) => {
       this.coaches = data;
 
       this.memberId = this.member.MemberId;
@@ -41,7 +41,7 @@ export class AddEditMember implements OnInit {
       this.coachName = this.member.Coach;
       this.dateOfJoin = this.member.DateOfJoin;
       this.photoFileName = this.member.PhotoFileName;
-      this.photoFilePath = this.shared.mediaUrl + this.member.PhotoFileName;
+      this.photoFilePath = this.sharedService.mediaUrl + this.member.PhotoFileName;
       console.log(this.photoFilePath);
     });
   }
@@ -54,7 +54,7 @@ export class AddEditMember implements OnInit {
       DateOfJoin: this.dateOfJoin,
       PhotoFileName: this.photoFileName
     };
-    this.shared.addMember(member).subscribe(data=>{
+    this.sharedService.addMember(member).subscribe(data=>{
       alert(data.toString());
     });
   }
@@ -67,7 +67,7 @@ export class AddEditMember implements OnInit {
       DateOfJoin: this.dateOfJoin,
       PhotoFileName: this.photoFileName
     };
-    this.shared.updateMember(member).subscribe(data=>{
+    this.sharedService.updateMember(member).subscribe(data=>{
       alert(data.toString());
     });
   }
@@ -78,9 +78,9 @@ export class AddEditMember implements OnInit {
     const formData: FormData = new FormData();
     formData.append('uploadedFile', file, file.name);
 
-    this.shared.uploadPhoto(formData).subscribe((data: any) => {
+    this.sharedService.uploadPhoto(formData).subscribe((data: any) => {
       this.photoFileName = data.toString();
-      this.photoFilePath = this.shared.mediaUrl + this.photoFileName;
+      this.photoFilePath = this.sharedService.mediaUrl + this.photoFileName;
     })
   }
 }

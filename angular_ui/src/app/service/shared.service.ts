@@ -8,7 +8,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 
-export class Shared {
+export class SharedService {
   readonly apiUrl = environment.apiBaseUrl;
   readonly mediaUrl = this.apiUrl + '/media/';
 

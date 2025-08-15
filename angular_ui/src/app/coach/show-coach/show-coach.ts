@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 
 //import { NgFor } from '@angular/common'; // Import NgFor specifically
 
-import { Shared } from '../../service/shared.service'
+import { SharedService } from '../../service/shared.service'
 import { AddEditCoach } from '../add-edit-coach/add-edit-coach';
 
 @Component({
@@ -25,7 +25,7 @@ export class ShowCoach implements OnInit {
   coachNameFilter: string = "";
   coachesOrigin: any = [];
 
-  constructor(private shared: Shared) {
+  constructor(private sharedService: SharedService) {
 
   }
 
@@ -35,7 +35,7 @@ export class ShowCoach implements OnInit {
   }
 
   getCoaches() {
-    this.shared.getCoaches().subscribe(data => {
+    this.sharedService.getCoaches().subscribe(data => {
       console.log("Shared service getCoaches() start ---");
       this.coaches = data;
       this.coachesOrigin = data;
@@ -66,7 +66,7 @@ export class ShowCoach implements OnInit {
 
   deleteCoach(coach: any) {
     if (confirm('Are you sure??')) {
-      this.shared.deleteCoach(coach.CoachId).subscribe(data => {
+      this.sharedService.deleteCoach(coach.CoachId).subscribe(data => {
         alert(data.toString());
         this.getCoaches();
       });
