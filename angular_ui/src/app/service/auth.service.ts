@@ -3,11 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
+import { environment } from '../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  readonly apiUrl = "http://127.0.0.1:8000";
+  readonly apiUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient, private router:Router) { }
 
