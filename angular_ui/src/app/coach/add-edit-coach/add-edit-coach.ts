@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { Shared } from '../../service/shared'
+import { Shared } from '../../service/shared.service'
 
 @Component({
   selector: 'app-add-edit-coach',

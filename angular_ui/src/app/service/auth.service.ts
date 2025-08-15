@@ -32,7 +32,6 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    console.log("}}}}}}}}}}}}}");
     console.log(!!localStorage.getItem('access_token'));
     
     return !!localStorage.getItem('access_token'); // or 'token' depending on what you saved

@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 
 //import { NgFor } from '@angular/common'; // Import NgFor specifically
 
-import { Shared } from '../../service/shared'
+import { Shared } from '../../service/shared.service'
 import { AddEditCoach } from '../add-edit-coach/add-edit-coach';
 
 @Component({
